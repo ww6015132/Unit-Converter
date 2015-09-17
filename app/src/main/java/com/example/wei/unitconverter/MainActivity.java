@@ -84,7 +84,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startAnimation(last, now);
                 mSelectIndex = 1;
 
-                changeBussiness();
+                changeToLength();
                 break;
             case R.id.tab_bt_3:
                 last = mTab_item_container.getChildAt(mSelectIndex);
@@ -92,7 +92,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startAnimation(last, now);
                 mSelectIndex = 2;
 
-                changeMessage();
+                changeToTemp();
                 break;
             case R.id.tab_bt_4:
                 last = mTab_item_container.getChildAt(mSelectIndex);
@@ -100,7 +100,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startAnimation(last, now);
                 mSelectIndex = 3;
 
-                changeSetting();
+                changeToVolumn();
                 break;
             case R.id.tab_bt_5:
                 last = mTab_item_container.getChildAt(mSelectIndex);
@@ -108,7 +108,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startAnimation(last, now);
                 mSelectIndex = 4;
 
-                changeWeight();
+                changeToWeight();
                 break;
             default:
                 break;
@@ -131,7 +131,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ft.commit();
     }
 
-    public void changeBussiness() {
+    public void changeToLength() {
         Fragment f = new AreaFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
@@ -140,7 +140,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ft.commit();
     }
 
-    public void changeMessage() {
+    public void changeToTemp() {
         Fragment f = new AreaFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
@@ -149,7 +149,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ft.commit();
     }
 
-    public void changeSetting() {
+    public void changeToVolumn() {
         Fragment f = new AreaFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
@@ -158,7 +158,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         ft.commit();
     }
 
-    public void changeWeight() {
+    public void changeToWeight() {
         Fragment f = new AreaFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
