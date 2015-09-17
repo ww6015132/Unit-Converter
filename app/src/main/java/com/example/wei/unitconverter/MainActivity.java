@@ -3,6 +3,9 @@ package com.example.wei.unitconverter;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -38,7 +41,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         changeToArea();
     }
 
-    private void initView(){
+    private void initView() {
         mTab_item_container = (LinearLayout) findViewById(R.id.tab_item_container);
         mAreaImage = (ImageView) findViewById(R.id.tab_bt_1);
         mLengthImage = (ImageView) findViewById(R.id.tab_bt_2);
@@ -114,6 +117,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
         }
     }
+
     private void startAnimation(View last, View now) {
         TranslateAnimation ta = new TranslateAnimation(last.getLeft(), now.getLeft(), 0, 0);
         ta.setDuration(300);
@@ -127,12 +131,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
         ft.replace(R.id.content_container, f);
-        Log.i("changeToArea","running");
         ft.commit();
     }
 
     public void changeToLength() {
-        Fragment f = new AreaFragment();
+        Fragment f = new LengthFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
@@ -141,7 +144,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void changeToTemp() {
-        Fragment f = new AreaFragment();
+        Fragment f = new TemperatureFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
@@ -150,7 +153,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void changeToVolumn() {
-        Fragment f = new AreaFragment();
+        Fragment f = new VolumeFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
@@ -159,13 +162,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     public void changeToWeight() {
-        Fragment f = new AreaFragment();
+        Fragment f = new WeightFragment();
         if (null == mFM)
             mFM = getSupportFragmentManager();
         FragmentTransaction ft = mFM.beginTransaction();
         ft.replace(R.id.content_container, f);
         ft.commit();
-        Toast.makeText(MainActivity.this,"fragment1",Toast.LENGTH_SHORT).show();
     }
 
     private static Boolean isQuit = false;
@@ -173,24 +175,38 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (isQuit == false) {
-                isQuit = true;
-                Toast.makeText(getBaseContext(), "this", Toast.LENGTH_SHORT).show();
-                TimerTask task = null;
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        isQuit = false;
-                    }
-                };
-                timer.schedule(task, 2000);
-            } else {
-                finish();
-            }
-        } else {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            //弹出确定退出对话框
+            new AlertDialog.Builder(this)
+                    .setTitle("Quit")
+                    .setMessage("Are your ready to quit？")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+                            Intent exit = new Intent(Intent.ACTION_MAIN);
+                            exit.addCategory(Intent.CATEGORY_HOME);
+                            exit.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(exit);
+                            System.exit(0);
+                        }
+                    })
+                    .setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // TODO Auto-generated method stub
+                            dialog.cancel();
+                        }
+                    })
+                    .show();
+            //这里不需要执行父类的点击事件，所以直接return
+            return true;
         }
-        return false;
+        //继续执行父类的其他点击事件
+        return super.onKeyDown(keyCode, event);
     }
 }
